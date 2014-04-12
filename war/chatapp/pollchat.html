@@ -1,0 +1,182 @@
+
+<head>
+<meta charset="UTF-8">
+<script src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
+<script src="../JS/jquery.cookie.js"></script>
+<script src="http://www.jacklmoore.com/js/jquery.autosize.js"></script>
+
+</head>
+
+
+
+
+<body>
+<h2>やらないか?</h2>
+<p>啊不想工作不想早睡我艹...啊啊啊啊我不做人了...温馨提示,输入exec:history可以看到全部变态们的搜索记录给你这个变态做变态的参考</p>
+<div id="LoadingImage" style="display: none">
+Connecting to Server...<img src="/loading.gif" /> 
+</div>
+<div id="mesg2" style="width: 100%; height: 70%; overflow-y: scroll;"></div>
+Post your message (Press ENTER to submit):
+<input type="text"  id="msgf" style="border:3px inset #BDBDBD;width: 100%;" />
+
+
+
+<script>
+$("#msgf").prop('disabled',true);
+$("#LoadingImage").show();
+chatid=$.cookie("chatid");
+var textcnt=0;
+var currentclientid="NULL";
+var connected=false;
+var lastmsgtime="04/03/2014 19:20:45";
+var sendmsgtoser=function(msgtext){
+	
+	$.ajax({url:"../ChatSev",
+		type: "POST",
+		dataType: "json",
+		   data: { 
+		        'reqtype': 'sendmsg', 
+		        'reqchatid': chatid ,
+		        'reqcont': encodeURIComponent(msgtext)
+		    },
+		error: function(error) {
+			alert("Error in page get: "+error.responseText);
+		},
+		success:function(result){
+			if(result.length)
+			{
+
+				chatid=result[0]["desc"];
+				$("#msgf").prop('disabled',false);
+				$("#msgf").val("")
+				$.cookie('chatid',chatid);
+				
+				if(result.length==1)
+				{
+
+					writemsgtodiv("++++++"+">"+chatid+": "+msgtext);					
+					
+				}else
+				{
+					tempstrsysout="";
+					writemsgtodiv("--------------ㄟ(￣▽￣ㄟ)Show System Output Now----------------");
+					for(i=1;i<result.length;i++)
+					{
+						tempstrsysout+=result[i]["desc"];
+						tempstrsysout+="  ㄟ(￣▽￣ㄟ)  ";
+						
+					}
+					writemsgtodiv(tempstrsysout);
+					writemsgtodiv("--------------o(╯□╰)oSystem Output End----------------");
+				}
+				
+
+				
+			}
+			//	alert("get chatid: "+ chatid);
+								},
+	timeout: 60000,
+	cache: false
+	});	
+	
+	
+};
+
+$("#msgf").bind("enterKey",function(e){
+	   //do stuff here
+	//   alert($("#msgf").val());
+	   $("#msgf").prop('disabled',true);
+	   sendmsgtoser($("#msgf").val());
+
+	   
+	});
+	$("#msgf").keyup(function(e){
+	    if(e.keyCode == 13)
+	    {
+	        $(this).trigger("enterKey");
+	    }
+	});
+
+var ajaxurlstring="../ChatSev?uid=request_token";
+
+var writemsgtodiv=function(msgtext)
+{
+	$("div#mesg2").append("<div><textarea disabled id=text"+textcnt+" class='animated' style='width: 95%;'>"+msgtext+"</textarea></div>");
+  //  $('text'+textcnt).height( 0 );
+  //  $('text'+textcnt).height( $('text'+textcnt).scrollHeight );
+ $('#text'+textcnt).autosize().show().trigger('autosize.resize');
+    textcnt++;
+	$('div#mesg2').scrollTop($('div#mesg2').prop("scrollHeight")); //.animate({scrollTop: $('div#mesg2').prop('scrollHeight')},'fast');
+}
+
+$.ajax({url:"../ChatSev",
+	type: "POST",
+	dataType: "json",
+	   data: { 
+	        'reqtype': 'getmsg_all', 
+	        'reqcont': 'null'
+	    },
+	error: function(error) {
+		alert("Error in polling: "+error.responseText);
+	},
+	success:function(result){
+//	alert(result.length);
+//	alert(result);
+	$("#LoadingImage").hide();
+	$("#msgf").prop('disabled',false);
+	if (result.length)
+	{
+	lastmsgtime=result[result.length-1]["datetime"];
+		for(j=0;j<result.length;j++)
+		{
+			writemsgtodiv(result[j]["datetime"]+">"+result[j]["url"]+": "+decodeURIComponent(result[j]["desc"]));
+		}
+	}
+		
+	
+	//setTimeout(connecttoserver,5000);
+							},
+timeout: 60000,
+cache: false
+});	
+
+
+var connecttoserver=function(){
+
+	$.ajax({url:"../ChatSev",
+		type: "POST",
+		dataType: "json",
+		   data: { 
+		        'reqtype': 'getmsg', 
+		        'reqcont': lastmsgtime,
+		        'reqchatid' : chatid
+		    },
+		error: function(error) {
+			alert("Error in polling: "+error.responseText);
+		},
+		success:function(result){
+	//	alert(result.length);
+	//	alert(result);
+		if (result.length)
+	{
+		lastmsgtime=result[result.length-1]["datetime"];
+			for(j=0;j<result.length;j++)
+			{
+				writemsgtodiv(result[j]["datetime"]+">"+result[j]["url"]+": "+decodeURIComponent(result[j]["desc"]));
+			}
+	}
+		
+		setTimeout(connecttoserver,8000);
+								},
+	timeout: 60000,
+	cache: false
+	});	
+	
+	
+}
+setTimeout(connecttoserver,10000);
+
+</script>
+
+</body>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+
+   <servlet>
+    <servlet-name>urlf</servlet-name>
+    <servlet-class>com.sick.gooserver.server.URLf</servlet-class>
+  </servlet>
+     <servlet>
+    <servlet-name>urlf2</servlet-name>
+    <servlet-class>com.sick.gooserver.server.URLf2</servlet-class>
+  </servlet>
+   <servlet>
+    <servlet-name>kukuana</servlet-name>
+    <servlet-class>com.sick.gooserver.server.kukuana</servlet-class>
+  </servlet> 
+  <servlet>
+    <servlet-name>pagehandler</servlet-name>
+    <servlet-class>com.sick.gooserver.server.pagehandler</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ChatSev</servlet-name>
+    <servlet-class>com.sick.gooserver.server.ChatSev</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>connected</servlet-name>
+    <servlet-class>com.sick.gooserver.server.connected</servlet-class>
+  </servlet>
+    <servlet>
+    <servlet-name>disconnected</servlet-name>
+    <servlet-class>com.sick.gooserver.server.disconnected</servlet-class>
+  </servlet>
+  
+  
+ <servlet-mapping>
+    <servlet-name>connected</servlet-name>
+    <url-pattern>/_ah/channel/connected/</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+    <servlet-name>disconnected</servlet-name>
+    <url-pattern>/_ah/channel/disconnected/</url-pattern>
+ </servlet-mapping>
+  
+  
+ <servlet-mapping>
+    <servlet-name>urlf</servlet-name>
+    <url-pattern>/urlf</url-pattern>
+ </servlet-mapping>
+ <servlet-mapping>
+    <servlet-name>urlf2</servlet-name>
+    <url-pattern>/urlf2</url-pattern>
+ </servlet-mapping>
+  
+  
+  <servlet-mapping>
+    <servlet-name>kukuana</servlet-name>
+    <url-pattern>/kukuana</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>pagehandler</servlet-name>
+    <url-pattern>/pagehandler</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ChatSev</servlet-name>
+    <url-pattern>/ChatSev</url-pattern>
+  </servlet-mapping>
+  
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Index.html</welcome-file>
+  </welcome-file-list>
+
+</web-app>

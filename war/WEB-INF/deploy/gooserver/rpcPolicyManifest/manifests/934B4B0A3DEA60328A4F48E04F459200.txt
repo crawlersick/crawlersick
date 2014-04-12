@@ -1,0 +1,2 @@
+serviceClass: com.sick.gooserver.client.GreetingService
+path: 2D06779A7B7217463613B79E6AEB4F74.gwt.rpc

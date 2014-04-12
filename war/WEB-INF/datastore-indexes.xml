@@ -1,0 +1,7 @@
+<datastore-indexes
+  autoGenerate="true">
+		<datastore-index kind="searchhist" ancestor="false">
+		  <property name="searchdate" direction="desc" />
+		  <property name="searchurl" direction="asc" />
+		</datastore-index>
+</datastore-indexes>

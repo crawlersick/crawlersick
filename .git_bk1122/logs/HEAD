@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 20404c7ae5c3f8670938a0cb0e42d43164e30ea5 John Yang <john.b.y.yang@gmail.com> 1397052473 +0800	clone: from https://github.com/hentaisocket/sickcrawler.git
+20404c7ae5c3f8670938a0cb0e42d43164e30ea5 68931f3c41ec5fd93f69a0c97ed3c0ec6bc7acae John Yang <john.b.y.yang@gmail.com> 1397053347 +0800	commit: re-sub this project hoho
+68931f3c41ec5fd93f69a0c97ed3c0ec6bc7acae 03783649989f9e434345c289c8e4b96be53236ec John Yang <john.b.y.yang@gmail.com> 1397054179 +0800	commit: add readme
+03783649989f9e434345c289c8e4b96be53236ec 0abe327f9905aa0b4ae7536902b6104ba392d20a John Yang <john.b.y.yang@gmail.com> 1397066554 +0800	commit: ...
+0abe327f9905aa0b4ae7536902b6104ba392d20a 1e7ef01cc0ca07ddf248f013ba7fc3ff12ca584c John Yang <john.b.y.yang@gmail.com> 1397066786 +0800	commit: ...
+1e7ef01cc0ca07ddf248f013ba7fc3ff12ca584c 4ae8bd534c6aec36bda481e843c5331364da151e John Yang <john.b.y.yang@gmail.com> 1397067173 +0800	commit: remove all gwt
+4ae8bd534c6aec36bda481e843c5331364da151e e11ae54fc774639ad7f62341b7e861f88b738d8a John Yang <john.b.y.yang@gmail.com> 1397313478 +0800	commit: keep the hash id and hash password in the database instead of hard code in the class
