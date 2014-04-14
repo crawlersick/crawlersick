@@ -169,7 +169,22 @@ function lv1pageget(lv1pagenum){
 			for(i=0;i<indexarry.length;i++)
 			{
 
-				$("#taldiv").append("<div id=inx"+i+">"+"<a href='javascript:;'>"+indexarry[i]["desc"] +"</a>"+" --- http://sickcrawler.appspot.com/?k="+indexarry[i]["url"] +"</div>");	
+				$("#taldiv").append("<div id=inx"+i+">"+"<a href='javascript:;'>"+indexarry[i]["desc"] +"</a>"+" --- http://sickcrawler.appspot.com/?k="+indexarry[i]["url"] +"</div>"+"<div class='preview' id='picture"+i+"'>"+"<img src='/preimage?imgurl="+indexarry[i]["url2"]+"' /></div>");
+				//$("#taldiv").append("<div id=inx"+i+">"+"<a href='javascript:;'>"+indexarry[i]["desc"] +"</a>"+" --- http://sickcrawler.appspot.com/?k="+indexarry[i]["url"] +"</div>");
+					
+
+				$("#picture"+i).hide();
+				$("#inx"+i).mouseover(function() {
+					 thisdivid = $(this).attr("id");
+					x=thisdivid.replace("inx","");	
+					$("#picture"+x).show();
+				});
+				$("#inx"+i).mouseout(function() {
+					thisdivid = $(this).attr("id");
+					x=thisdivid.replace("inx","");
+					$("#picture"+x).hide();
+					});
+				
 				$("#inx"+i).unbind('click');
 				$("#inx"+i).click(function() {			
 					 thisdivid = $(this).attr("id");
@@ -337,13 +352,21 @@ function getrecentlist(targetdiv){
 
 
 <title>Sickcrawler - 本子机器人</title>
+
+<style> 
+div.preview
+{
+    position: absolute;
+    z-index:99;
+}
+</style>
+
 </head>
 <body bgcolor="#CCE8CD">
 
 <div id="div"><h7>hentai books bot</h7></div>
 <div id="instr">  <h5>     <a href='/chatapp/pollchat.html' target='_blank'>やらないか?</a></h5></div>
-<div><input id="urlpicker" type="text" value=""   name="url" style="width: 600px;" ></div>
-<div><button id="button">Get Result</button>(搜索你喜欢的关键字,如'oppai')</div>
+<div><button id="button">Get Result</button><input id="urlpicker" type="text" value=""   name="url" style="width: 600px;" ></div>
 <div id="LoadingImage" style="display: none">
 <img src="/loading.gif" /> 
 </div>
@@ -381,7 +404,11 @@ function getrecentlist(targetdiv){
 </script>
 
 <br><br>
-<br><br>		
+<br><br>	
+<br><br>
+<br><br>	
+<br><br>
+<br><br>			
 
 </body>
 </html>

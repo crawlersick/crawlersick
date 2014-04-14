@@ -39,6 +39,14 @@ public FetchMangaIndex(String urlstr,String regxstr) throws IOException{
 	 this.regxstr=regxstr;
 }
 
+public String getRegxstr() {
+	return regxstr;
+}
+
+public void setRegxstr(String regxstr) {
+	this.regxstr = regxstr;
+}
+
 public String getconencode(){
 	return conencode;
 }

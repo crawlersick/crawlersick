@@ -116,7 +116,7 @@ public class pagehandler extends HttpServlet {
 			{
 			cntlv1++;
 			fmi=new FetchMangaIndex(requrlwithpara,regxstrhentai);
-			res1=this.dokkkdmextra(res, fmi);
+			res1=this.dokkkdmextra(res, fmi,true);
 			if(cntlv1==5)
 				break;
 			if(cntlv1>1)
@@ -299,6 +299,67 @@ public class pagehandler extends HttpServlet {
 			}		
 
 			ArrayList<ChapterItem> res1 = fmi.getIndex();
+			
+
+			return res1;
+		
+	}
+	
+	public ArrayList<ChapterItem> dokkkdmextra(HttpServletResponse res,FetchMangaIndex fmi,boolean previewfetchflag) throws IOException
+	{
+
+		String serres="";
+		try{
+			 serres=fmi.initreq();
+			}catch(SocketTimeoutException ste){
+				res.getWriter().append("Read URL time out!!! - "+ste.toString());
+			}
+				
+			if (!serres.equals("OK"))
+			{
+
+				return null;
+			}		
+
+			ArrayList<ChapterItem> res1 = fmi.getIndex();
+			
+			fmi.setRegxstr("<div class=\"it2\" id=\"i([0-9]+)\" style=\"[^\"]+\">(.*?)</div>");
+			ArrayList<ChapterItem> res1_previewimage = fmi.getIndex();
+			
+			if(res1_previewimage.size()>=1 && res1_previewimage.size()==res1.size())
+			{	
+				
+				String firststr[]=res1_previewimage.get(0).getdesc().split("\"");
+				if (firststr!=null&&firststr.length>0)
+				{
+					res1.get(0).setUrl2(res1_previewimage.get(0).getdesc().split("\"")[1]);
+				}else
+				{
+					res1.get(0).setUrl2("empty first previewurl!");
+				}
+				res1.get(0).setDesc2(res1_previewimage.get(0).geturl());
+				
+				for (int i=1;i<res1.size();i++)
+				{
+					String tempstrarr[]=res1_previewimage.get(i).getdesc().split("~");
+					if (tempstrarr!=null&&tempstrarr.length>=3)
+					{
+						res1.get(i).setUrl2("http://"+tempstrarr[1]+"/"+tempstrarr[2]);
+					}
+					res1.get(i).setDesc2(res1_previewimage.get(i).geturl());
+				}
+				/*
+				for(ChapterItem tempci:res1)
+				{
+					
+					log.info("desc:  "+tempci.getDesc2());
+					log.info("url:  "+tempci.getUrl2());
+				}
+			*/
+			}
+			
+
+
 			
 
 			return res1;

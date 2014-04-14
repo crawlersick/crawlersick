@@ -7,6 +7,11 @@
 
   <!-- Servlets -->
 
+
+<servlet>
+    <servlet-name>preimage</servlet-name>
+    <servlet-class>com.sick.gooserver.server.PreImageFet</servlet-class>
+</servlet>
    <servlet>
     <servlet-name>urlf</servlet-name>
     <servlet-class>com.sick.gooserver.server.URLf</servlet-class>
@@ -71,6 +76,10 @@
     <url-pattern>/ChatSev</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>preimage</servlet-name>
+    <url-pattern>/preimage</url-pattern>
+  </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
