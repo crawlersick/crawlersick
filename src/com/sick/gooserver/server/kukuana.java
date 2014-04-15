@@ -4,6 +4,7 @@ package com.sick.gooserver.server;
 import java.io.IOException;
 
 import javax.servlet.http.*;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -228,21 +229,22 @@ public class kukuana extends HttpServlet {
 					if(res1==null || res1.size()==0)
 					{
 						res1=null;
-						try {
-							Thread.sleep(500);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
 					}
 					cnt++;
-					if (cnt==5)
+					if (cnt==2)
 						break;
+					
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			 					}
 			 
-			 if(cnt == 5 && (res1==null || res1.size()==0))
+			 if(cnt == 2 && (res1==null || res1.size()==0))
 			 {				 
-				 log.warning("this ehentai lv3 request makes 5 times and result in error !!!"+qvalue+"\r\n"+fmi.GetContent());
+				 log.warning("this ehentai lv3 request makes 3 times and result in error !!!"+qvalue+"\r\n"+fmi.GetContent());
 				 res1=new ArrayList<ChapterItem>();
 				 res1.add(errorci);
 			 }

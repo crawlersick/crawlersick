@@ -1,0 +1,10 @@
+div.preview
+{
+    position: absolute;
+    z-index:20;
+}
+div.listitem
+{
+    position: relative;
+    z-index:50;
+}

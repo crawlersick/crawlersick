@@ -37,7 +37,7 @@ public class ChatSev extends HttpServlet{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(pagehandler.class.getName());
+	private static final Logger log = Logger.getLogger(ChatSev.class.getName());
 //	public static String chatid="1";
 	public static int initid=1;
 	public static ArrayList<ChapterItem> res1=new ArrayList<ChapterItem>();
