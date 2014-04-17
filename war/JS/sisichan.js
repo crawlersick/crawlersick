@@ -231,6 +231,7 @@ function lv2hentaiget(thisdivid,allqtype,xxx,serverurl)
 		dataType: "json",
 		error: function(error) {
 			alert("Error "+error.responseText);
+			lv2hentaiget(thisdivid,allqtype,xxx,serverurl);
 		},
 		success:function(result){
 		//alert(serverurl+result[0]["url"]);
@@ -273,19 +274,19 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		cache: false,
 		async: true,
 		error: function(error) {
-			//alert("Error "+error.responseText);
-			$("#"+thiselem).append("<div>"+"Server to busy. re-loading after 1min - timeout :"+ urlitem[loopii]["url"] +"</div> ");
-			setTimeout(loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii),60000);
+			$("#"+thiselem).append("Error "+error.responseText);
+			$("#"+thiselem).append("<div>"+"Server to busy 1. re-loading - timeout :"+ urlitem[loopii]["url"] +"</div> ");
+			loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
 		},
 		success: function(data){
-		/*	
+			
 			if (data[0]["url"]=="/404.png")
 				{
-				$("#"+thiselem).append("<div>"+"Server to busy. re-loading after 1min -  :"+ urlitem[loopii]["url"] +"</div> ");
-				setTimeout(loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii),60000);
-				return;
+				$("#"+thiselem).append("<div>"+"Server to busy 2. re-loading  -  :"+ urlitem[loopii]["url"] +"</div> ");
+				//loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
+				//return;
 				}
-		*/		
+				
         	$("#"+thiselem).append("<div> <img src="+data[0]["url"]+" /></div> ");
         	
 			$("#"+thiselem).children().last().click(function() {
@@ -309,7 +310,7 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		    });
         	
         	//alert(thiselem+"======="+data[0]['url']);
-			setTimeout(loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1),1000);
+			loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
         }
     });
 	
@@ -326,7 +327,15 @@ function getrecentlist(targetdiv){
 			$("#"+targetdiv).append("<div> recent:");
 			for(j=0;j<result.length;j++)
 				{			
+				
+				if(result[j]["url"]=="myword")
+					{
+						$("#divword").html("<h6>"+result[j]["desc"]+"</h6>");
+					}
+				else
+					{
 					$("#"+targetdiv).append("<a href=\"/?k="+result[j]["url"]+"\">"+result[j]["desc"].split("/")[4]+" </a> | ");
+					}
 				}
 			$("#"+targetdiv).append("</div>");
 

@@ -67,9 +67,10 @@ public String initreq() throws IOException{
 	 urlc.setRequestProperty("Accept-Charset", "UTF-8");
 	 urlc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.14) Gecko/20110218 Firefox/3.6.14");
 	 urlc.setRequestProperty("Cookie","ipb_member_id="+cookielist.get(0).getHashid()+";ipb_pass_hash="+cookielist.get(0).getHashps()+";nw=1;"
-	 		+ "uconfig=tl_m-uh_y-rc_0-cats_0-xns_0-ts_m-tr_1-prn_y-dm_l-rx_0-ry_0-sa_y-oi_n-qb_n-tf_n-hp_-hk_-xl_;"
-	 		+ "yay=louder;"
-	 		+ "lv=1387043522-1387048141");
+	 	//	+ "uconfig=tl_m-uh_y-rc_0-cats_0-xns_0-ts_m-tr_1-prn_y-dm_l-rx_0-ry_0-sa_y-oi_n-qb_n-tf_n-hp_-hk_-xl_;"
+	 	//	+ "yay=louder;"
+	 	//	+ "lv=1387043522-1387048141"
+	 		);
 
 	 
 	 urlc.connect();

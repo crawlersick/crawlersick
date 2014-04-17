@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import netfetch.ChapterItem;
 import netfetch.Cookieinfo;
 import netfetch.FetchMangaIndex;
+import netfetch.Mywords;
 import netfetch.PMF;
 
 import java.net.SocketTimeoutException;
@@ -41,7 +42,7 @@ public class pagehandler extends HttpServlet {
 
 	private static final String regxstrhentai="<div class=\"it5\"><a href=\"([^\"]+)\" onmouseover=\"show_image_pane\\([0-9]+\\)\" onmouseout=\"hide_image_pane\\([0-9]+\\)\">([^<]+)";
 	private static  ArrayList<ChapterItem> recentlist;
-	private static  ArrayList<Cookieinfo> cookieinfolist;
+	private static  List<Mywords> MywordsList;
 	
 	  public void init(ServletConfig config) throws ServletException {
 		    super.init(config);
@@ -55,6 +56,16 @@ public class pagehandler extends HttpServlet {
 		    	Cookieinfo cii =new Cookieinfo("hashid","hashpassword","yooooo!");
 		    	pm.makePersistent(cii);
 		    }
+		    
+		    q=pm.newQuery(Mywords.class);
+		    MywordsList=(List<Mywords>) q.execute();
+		    if(MywordsList.isEmpty())
+		    {
+		    	
+		    	Mywords mwd =new Mywords("Yooooooooooooo!Hentais!","","",0);
+		    	pm.makePersistent(mwd);
+		    }
+		    
 		    pm.close();
 		    
 		    
@@ -163,6 +174,17 @@ public class pagehandler extends HttpServlet {
 					 tempcitem.seturl(citem.geturl());
 					 res1.add(tempcitem);
 					}
+				 
+				 if(MywordsList!=null && MywordsList.size()>0)
+				 {
+					 ChapterItem tempcitem=new ChapterItem();
+					 int random = (int )(Math.random() * MywordsList.size());
+					 
+					 tempcitem.setdesc(MywordsList.get(random).getContenttext1());
+					 tempcitem.seturl("myword");
+					 res1.add(tempcitem);
+				 }
+				 
 				}
 			}
 		}
@@ -213,6 +235,13 @@ public class pagehandler extends HttpServlet {
 					if(cnt>1)
 					{
 						log.info("this ehentai lv2 request for page count makes "+cnt+" times!!!"+qvalue);
+						try {
+							Thread.sleep(5000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					
 					}
 					cnt++;
 				 

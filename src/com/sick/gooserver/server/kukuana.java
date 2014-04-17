@@ -231,18 +231,22 @@ public class kukuana extends HttpServlet {
 						res1=null;
 					}
 					cnt++;
-					if (cnt==2)
+					if (cnt==3)
 						break;
 					
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(res1==null)
+					{
+					log.info("cnt= "+cnt+" try to sleep 12000 now!!!"+qvalue);
+						try {
+							Thread.sleep(12000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 			 					}
 			 
-			 if(cnt == 2 && (res1==null || res1.size()==0))
+			 if(cnt == 3 && (res1==null || res1.size()==0))
 			 {				 
 				 log.warning("this ehentai lv3 request makes 3 times and result in error !!!"+qvalue+"\r\n"+fmi.GetContent());
 				 res1=new ArrayList<ChapterItem>();
