@@ -44,24 +44,38 @@ public class kukuana extends HttpServlet {
 	private static final String regxstrkkkmh_lv2="pic\\[[0-9]+\\] = '([a-f0-9]+)'(;)";
 	private static final String regxstrkkkmh_ser="name:'([^']+)', url:'([^']+)'";
 	private static final String regxstrhentai="<div class=\"it5\"><a href=\"([^\"]+)\" onmouseover=\"show_image_pane\\([0-9]+\\)\" onmouseout=\"hide_image_pane\\([0-9]+\\)\">([^<]+)";
+	public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+
+		
+	}
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		req.setCharacterEncoding("UTF-8");  
 		String qtype =req.getParameter("qtype");
 		String qvalue =req.getParameter("qvalue");
 		
+		String originheader=req.getHeader("Origin");
+		if(originheader != null)
+		{
+		//log.info("Origin ----got!!!! "+originheader);
+			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.addHeader("Access-Control-Allow-Credentials", "true");
+			res.addHeader("Access-Control-Expose-Headers", "lalala");
+		//	req.setAttribute("Content-Type", "text/html; charset=utf-8");
+		}
+
 			
 		res.setHeader("Content-Type", "text/plain; charset=utf-8");
 		res.setCharacterEncoding("UTF-8");
-		res.setHeader("Server", "I_AM_HENTAI");
+		//res.setHeader("Server", "I_AM_HENTAI");
 		if(qtype == null || qvalue == null)
 		{
-			res.getWriter().append("Error Query!");
+			res.getWriter().append("Error Query1!");
 			return;
 		}
 		if(qtype.equals("") || qvalue.equals(""))
 		{
-			res.getWriter().append("Error Query!");
+			res.getWriter().append("Error Query2!");
 			return;
 		}
 		
@@ -212,7 +226,15 @@ public class kukuana extends HttpServlet {
 			 res1=null;int cnt=0;
 			 while(res1==null){
 				 fmi=new FetchMangaIndex(qvalue,"<img id=\"img\" src=\"([^\"]+)\" (style)=");					
-					res1=this.dokkkdmextra(res, fmi);						
+					res1=this.dokkkdmextra(res, fmi);	
+					
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					if(res1!=null && res1.size()!=0)
 					{
 						String lv3code=qvalue.split("[/]+")[3];
@@ -230,28 +252,31 @@ public class kukuana extends HttpServlet {
 					{
 						res1=null;
 					}
-					cnt++;
-					if (cnt==3)
+				//	cnt++;
+				//	if (cnt==3)
 						break;
-					
+					/*
 					if(res1==null)
 					{
-					log.info("cnt= "+cnt+" try to sleep 12000 now!!!"+qvalue);
+					log.info("cnt= "+cnt+" try to sleep 5000 now!!!"+qvalue);
 						try {
-							Thread.sleep(12000);
+							Thread.sleep(5000);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
+					*/
 			 					}
 			 
-			 if(cnt == 3 && (res1==null || res1.size()==0))
+			 //if(cnt == 3 && (res1==null || res1.size()==0))
+			 if(res1==null || res1.size()==0)
 			 {				 
-				 log.warning("this ehentai lv3 request makes 3 times and result in error !!!"+qvalue+"\r\n"+fmi.GetContent());
+				 log.warning("this ehentai lv3 request result in error !!!"+qvalue+"\r\n"+fmi.GetContent());
 				 res1=new ArrayList<ChapterItem>();
 				 res1.add(errorci);
 			 }
+			 /*
 			 else
 			 {
 				if(cnt>1)
@@ -259,7 +284,7 @@ public class kukuana extends HttpServlet {
 					log.info("this ehentai lv3 request makes "+cnt+" times!!!"+qvalue);
 				}
 			 }
-			
+			*/
 			
 		}
 		

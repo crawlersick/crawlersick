@@ -20,6 +20,7 @@ var maxpagenum=0;
 var popupwindowflag=false;
 var picloadingflag=false;
 var lv1pagenum0=0;
+var analystserver="http://sickcrawler-001.appspot.com/";
 
 
 
@@ -268,7 +269,15 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		return;}
 	$.ajax({
         type:"GET",
-        url: "kukuana?qtype="+allqtype+"_lv3&qvalue="+urlitem[loopii]["url"],
+        url: analystserver+"kukuana?qtype="+allqtype+"_lv3&qvalue="+urlitem[loopii]["url"],
+        xhrFields: {
+            // The 'xhrFields' property sets additional fields on the XMLHttpRequest.
+            // This can be used to set the 'withCredentials' property.
+            // Set the value to 'true' if you'd like to pass cookies to the server.
+            // If this is enabled, your server must respond with the header
+            // 'Access-Control-Allow-Credentials: true'.
+            withCredentials: false
+          },
 		dataType: "json",
 		timeout: 80000,
 		cache: false,
@@ -283,8 +292,12 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 			if (data[0]["url"]=="/404.png")
 				{
 				$("#"+thiselem).append("<div>"+"Server to busy 2. re-loading  -  :"+ urlitem[loopii]["url"] +"</div> ");
-				//loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
-				//return;
+				if(analystserver=="http://sorryformynet.appspot.com/")
+					{analystserver="http://sickcrawler-001.appspot.com/";}
+				else
+					{analystserver="http://sorryformynet.appspot.com/";}
+				loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
+				return;
 				}
 				
         	$("#"+thiselem).append("<div> <img src="+data[0]["url"]+" /></div> ");
