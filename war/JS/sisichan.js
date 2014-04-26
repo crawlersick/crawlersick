@@ -148,11 +148,16 @@ function lv1pageget(lv1pagenum){
 	vvflag=true;
 	$("#LoadingImage").show();
 	$.ajax({url:ajaxurlstring,
+		timeout: 10000,
+		cache: false,
 		type: "GET",
 		dataType: "json",
 		error: function(error) {
-			$("#LoadingImage").hide();
-			alert("Error "+error.responseText);
+			//$("#LoadingImage").hide();
+			
+			//alert("Error "+error.responseText);
+			$("#LoadingImage").append("reloading for app warmup");
+			lv1pageget(lv1pagenum);
 		},
 		success:function(result){
 			$("#LoadingImage").hide();
@@ -205,7 +210,9 @@ function lv2hentaipageget(thisdivid,allqtype,xxx,serverurl,currenpagenum)
 		type: "GET",
 		dataType: "json",
 		error: function(error) {
-			alert("Error in page get: "+error.responseText);
+//			alert("Error in page get: "+error.responseText);
+			$("#"+thisdivid).append("<div>"+"lv2 Error in page get, reloading: "+error.responseText+"</div> ");
+			lv2hentaipageget(thisdivid,allqtype,xxx,serverurl,currenpagenum);
 		},
 		success:function(result){
 		//alert(serverurl+result[0]["url"]);
@@ -219,7 +226,7 @@ function lv2hentaipageget(thisdivid,allqtype,xxx,serverurl,currenpagenum)
 			 loopitemfun(thisdivid,result,allqtype,result.length,0);
 
 								},
-	timeout: 60000,
+	timeout: 10000,
 	cache: false
 	});	
 	
@@ -253,7 +260,7 @@ function lv2hentaiget(thisdivid,allqtype,xxx,serverurl)
 			//	$("#"+thisdivid).click(function() { alert(($("#"+thisdivid).html().split("<div>"))[0]+"done!!!"); });
 			//	$("#"+thisdivid).unmask();
 	},
-	timeout: 60000,
+	timeout: 10000,
 	cache: false
 	});	
 }
@@ -279,7 +286,7 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
             withCredentials: false
           },
 		dataType: "json",
-		timeout: 80000,
+		timeout: 10000,
 		cache: false,
 		async: true,
 		error: function(error) {
@@ -296,7 +303,9 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 					{analystserver="http://sickcrawler-001.appspot.com/";}
 				else
 					{analystserver="http://sorryformynet.appspot.com/";}
-				loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
+				setTimeout(
+						function(){loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);}
+						,60000);
 				return;
 				}
 				
@@ -353,7 +362,7 @@ function getrecentlist(targetdiv){
 			$("#"+targetdiv).append("</div>");
 
 	},
-	timeout: 60000,
+	timeout: 10000,
 	cache: false
 	});	
 }

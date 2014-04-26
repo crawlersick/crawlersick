@@ -13,6 +13,7 @@ import netfetch.FetchMangaIndex;
 import netfetch.kkkdm_decode_piclink;
 
 import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -225,15 +226,19 @@ public class kukuana extends HttpServlet {
 			 fmi=null;
 			 res1=null;int cnt=0;
 			 while(res1==null){
-				 fmi=new FetchMangaIndex(qvalue,"<img id=\"img\" src=\"([^\"]+)\" (style)=");					
-					res1=this.dokkkdmextra(res, fmi);	
-					
+/*
 					try {
 						Thread.sleep(3000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+	*/			 
+				 
+				 fmi=new FetchMangaIndex(qvalue,"<img id=\"img\" src=\"([^\"]+)\" (style)=");					
+					res1=this.dokkkdmextra(res, fmi);	
+					
+
 					
 					if(res1!=null && res1.size()!=0)
 					{
@@ -272,9 +277,18 @@ public class kukuana extends HttpServlet {
 			 //if(cnt == 3 && (res1==null || res1.size()==0))
 			 if(res1==null || res1.size()==0)
 			 {				 
+				 
+				 
 				 log.warning("this ehentai lv3 request result in error !!!"+qvalue+"\r\n"+fmi.GetContent());
 				 res1=new ArrayList<ChapterItem>();
 				 res1.add(errorci);
+				 
+				 
+				 URL tempurl=new URL(qvalue);
+				 log.warning("try to get host !!!"+tempurl.getHost());
+				 fmi=new FetchMangaIndex(tempurl.getHost(),"<img id=\"img\" src=\"([^\"]+)\" (style)=");					
+					this.dokkkdmextra(res, fmi);	
+				 
 			 }
 			 /*
 			 else
