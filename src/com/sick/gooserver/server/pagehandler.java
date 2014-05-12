@@ -53,8 +53,9 @@ public class pagehandler extends HttpServlet {
 		    if(list.isEmpty())
 		    {
 		    	
-		    	Cookieinfo cii =new Cookieinfo("hashid","hashpassword","yooooo!");
+		    	Cookieinfo cii =new Cookieinfo("1400179","a3e01018c9b282d29864852ab8403d59","yooooo!");
 		    	pm.makePersistent(cii);
+		    	list=(List<Cookieinfo>) q.execute();
 		    }
 		    
 		    q=pm.newQuery(Mywords.class);
@@ -93,6 +94,17 @@ public class pagehandler extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");  
 		qtype =req.getParameter("qtype");
 		qvalue =req.getParameter("qvalue");
+		
+		String originheader=req.getHeader("Origin");
+		if(originheader != null)
+		{
+		//log.info("Origin ----got!!!! "+originheader);
+			res.addHeader("Access-Control-Allow-Origin", "*");
+			res.addHeader("Access-Control-Allow-Credentials", "true");
+			res.addHeader("Access-Control-Expose-Headers", "lalala");
+		//	req.setAttribute("Content-Type", "text/html; charset=utf-8");
+		}
+		
 		pagenn =req.getParameter("p");
 			
 		res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -123,22 +135,23 @@ public class pagehandler extends HttpServlet {
 			//log.info("the requrstr is "+requrlwithpara);
 						
 			int cntlv1=0;
-			while(res1==null||res1.size()==0)
-			{
-			cntlv1++;
+		//	while(res1==null||res1.size()==0)
+		//	{
+		//	cntlv1++;
 			fmi=new FetchMangaIndex(requrlwithpara,regxstrhentai);
 			res1=this.dokkkdmextra(res, fmi,true);
-			if(cntlv1==5)
-				break;
-			if(cntlv1>1)
+		//	if(cntlv1==5)
+		//		break;
+		//	if(cntlv1>1)
+			if(res1==null||res1.size()==0)
 				try {
-					log.info("lv1 re-try "+cntlv1);
+					log.info("lv1 re-try "+cntlv1+fmi.GetContent());
 					Thread.sleep(300);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+		//	}
 			
 			if (qvalue.indexOf("search=")!=-1&&res1!=null && res1.size()!=0)
 			{

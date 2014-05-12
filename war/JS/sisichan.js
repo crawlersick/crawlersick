@@ -21,6 +21,41 @@ var popupwindowflag=false;
 var picloadingflag=false;
 var lv1pagenum0=0;
 var analystserver="http://sickcrawler-001.appspot.com/";
+var currentlv3server=0;
+
+var arr=[
+'lv3requestserv0',
+'lv3requestserv1',
+'lv3requestserv2',
+'lv3requestserv3',
+'lv3requestserv4',
+'lv3requestserv5',
+'lv3requestserv6',
+'lv3requestserv7',
+'lv3requestserv8',
+'lv3requestserv9',
+'lv3requestserv10'
+         ];
+
+function shuffle(array)
+{
+var currentIndex = array.length,temporaryValue,randomIndex;
+while (0!=currentIndex){
+	console.log(currentIndex);
+	randomIndex=Math.floor(Math.random()*currentIndex);
+	currentIndex -= 1;
+	temporaryValue=array[currentIndex];
+	array[currentIndex]=array[randomIndex];
+	array[randomIndex]=temporaryValue;
+	
+}
+	return array;
+}
+
+
+
+shuffle(arr);
+analystserver="http://"+arr[0]+".appspot.com/";
 
 
 
@@ -38,6 +73,7 @@ $(document).ready(function(){
 	}
 	
 	$(window).scroll(function() {
+		/*
 		   if($(window).scrollTop() + $(window).height() > (getDocHeight() * 0.5)) {
 				if(allqtype=="ehentai"&&!vvflag&&picloadingflag)
 			   {
@@ -50,6 +86,7 @@ $(document).ready(function(){
 			   }
 	
 		   }
+		*/
 		   
 		   if($(window).scrollTop() + $(window).height() > (getDocHeight() * 0.9)) {
 			   if(allqtype=="ehentai"&&!picloadingflag&&lv1pagenum0>0&&!vvflag)
@@ -112,6 +149,8 @@ function lv1pageget(lv1pagenum){
 		mainhost="";
 		serverurl="";
 		allqtype="ehentai";
+		//shuffle(arr);
+		//"http://"+arr[0]+".appspot.com/"+
 		ajaxurlstring="pagehandler?qtype="+allqtype+"&qvalue="+targetanaurl+"&p="+lv1pagenum;
 		}
 
@@ -143,6 +182,8 @@ function lv1pageget(lv1pagenum){
 		allqtype="ehentai";
 		mainhost="";
 		serverurl="";
+		//shuffle(arr);
+		//"http://"+arr[0]+".appspot.com/"+
 		ajaxurlstring="pagehandler?qtype="+allqtype+"&qvalue="+targetanaurl+"&p="+lv1pagenum;
 		}
 	vvflag=true;
@@ -206,6 +247,8 @@ function lv2hentaipageget(thisdivid,allqtype,xxx,serverurl,currenpagenum)
 	$("#LoadingImage").show();
 	$("#button").prop("disabled", true);
 	vvflag=true;
+	//shuffle(arr);
+	//"http://"+arr[0]+".appspot.com/"+
 	$.ajax({url:"pagehandler?qtype="+allqtype+"_lv2_getpagenum&qvalue="+xxx+"&p="+currenpagenum,
 		type: "GET",
 		dataType: "json",
@@ -234,6 +277,8 @@ function lv2hentaipageget(thisdivid,allqtype,xxx,serverurl,currenpagenum)
 
 function lv2hentaiget(thisdivid,allqtype,xxx,serverurl)
 {
+	//shuffle(arr);
+	//"http://"+arr[0]+".appspot.com/"+
 	$.ajax({url:"kukuana?qtype="+allqtype+"_lv2&qvalue="+xxx,
 		type: "GET",
 		dataType: "json",
@@ -246,6 +291,7 @@ function lv2hentaiget(thisdivid,allqtype,xxx,serverurl)
 		$("#"+thisdivid).unbind('click');
 		 if (allqtype=="ehentai")
 				 {
+			 
 			 loopitemfun(thisdivid,result,allqtype,result.length,0);
 			
 				 }		
@@ -273,7 +319,20 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		$("#LoadingImage").hide();
 		$("#button").prop("disabled", false);
 		vvflag=false;
+		
+		if(allqtype=="ehentai"&&!vvflag&&picloadingflag)
+		   {
+				vvflag=true;
+				currenpagenum=currenpagenum+1;
+			if(currenpagenum<maxpagenum)
+			{
+				lv2hentaipageget("inxspec",allqtype,targetanaurl,serverurl,currenpagenum);
+			}
+		   }
+		
 		return;}
+	//shuffle(arr);
+	//"http://"+arr[0]+".appspot.com/"+
 	$.ajax({
         type:"GET",
         url: analystserver+"kukuana?qtype="+allqtype+"_lv3&qvalue="+urlitem[loopii]["url"],
@@ -291,13 +350,14 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		async: true,
 		error: function(error) {
 			$("#"+thiselem).append("Error "+error.responseText);
-			$("#"+thiselem).append("<div>"+"Server to busy 1. re-loading - timeout :"+ urlitem[loopii]["url"] +"</div> ");
+			$("#"+thiselem).append("<div>"+"Server too busy 1. re-loading - timeout :"+ urlitem[loopii]["url"] +"</div> ");
 			loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
 		},
 		success: function(data){
 			
 			if (data[0]["url"]=="/404.png")
 				{
+				/*
 				$("#"+thiselem).append("<div>"+"Server to busy 2. re-loading  -  :"+ urlitem[loopii]["url"] +"</div> ");
 				if(analystserver=="http://sorryformynet.appspot.com/")
 					{analystserver="http://sickcrawler-001.appspot.com/";}
@@ -307,6 +367,25 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 						function(){loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);}
 						,60000);
 				return;
+				*/
+				settimevvv=4000;
+				if(currentlv3server>=arr.length)
+				{
+				currentlv3server=0;
+				settimevvv=120000;
+				}
+				
+				$("#"+thiselem).append("<div>"+"Server too busy 2. re-loading  -  :"+ urlitem[loopii]["url"] +" with "+arr[currentlv3server]+"</div> ");
+				analystserver="http://"+arr[currentlv3server]+".appspot.com/";
+	
+					setTimeout(
+							function(){loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);}
+							,settimevvv);
+					
+		
+				currentlv3server++;
+				return;
+				
 				}
 				
         	$("#"+thiselem).append("<div> <img src="+data[0]["url"]+" /></div> ");
@@ -332,7 +411,13 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		    });
         	
         	//alert(thiselem+"======="+data[0]['url']);
-			loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
+			//loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
+			setTimeout(
+					function(){
+						loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
+					}
+					,2000);
+			
         }
     });
 	
