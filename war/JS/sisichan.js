@@ -390,6 +390,8 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 				
         	$("#"+thiselem).append("<div> <img src="+data[0]["url"]+" /></div> ");
         	
+        	// the click in img function
+        	/*
 			$("#"+thiselem).children().last().click(function() {
 				var loadingimg='http://lh3.googleusercontent.com/-czzb5jvQhcI/Uqu4YvHh6LI/AAAAAAAAAzc/jL8QhmDfq2Y/w426-h639/ryomou_shimei_b_w_by_grishnakh666-d6jciz7.jpg';
 				var tempchile=$(this).children().last();
@@ -409,14 +411,40 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 				//$(this).children().last().attr('src', $(this).children().last().attr('src')+'#'+Math.random());
 				//$(this).children().last().attr('src', 'http://static.adzerk.net/Advertisers/4c4f1be011a447efbce49c1811022e7a.png');
 		    });
+			*/
         	
-        	//alert(thiselem+"======="+data[0]['url']);
-			//loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
+			var tmpimg =$("#"+thiselem).children().last().find("img");
+			tmpimg.first().load(
+			function(){
+				console.log($("#"+thiselem).children().last().html() + "finished!");
+				setTimeout(
+						function(){
+							loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
+						}
+						,2000);
+			
+				}		
+			);
+			tmpimg.first().error(
+					function(){
+						console.log($("#"+thiselem).children().last().html() + "failed, re-try!");
+						$("#"+thiselem).children().last().remove();
+						setTimeout(
+								function(){
+									loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
+								}
+								,2000);
+					
+						}		
+					);
+/*
+			
 			setTimeout(
 					function(){
 						loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
 					}
-					,2000);
+					,6000);
+*/		
 			
         }
     });
