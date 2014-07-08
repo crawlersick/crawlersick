@@ -57,6 +57,8 @@ public class URLf extends HttpServlet {
 //	  Map.Entry map = (Map.Entry)i.next();
 //	  }
 	 String q =req.getParameter("qtype");
+	 String id =req.getParameter("id");
+	 String ps =req.getParameter("ps");
 	 
 		if(q == null || q.equals(""))
 		{
@@ -85,8 +87,11 @@ public class URLf extends HttpServlet {
     	// urlc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.14) Gecko/20110218 Firefox/3.6.14  AppEngine-Google; (+http://code.google.com/appengine; appid: s~sickcrawler)");
     	// urlc.setRequestProperty("User-Agent", "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
     	// urlc.setRequestProperty("Cookie","");
-    	 urlc.setRequestProperty("Cookie","ipb_member_id=1400179;ipb_pass_hash=a3e01018c9b282d29864852ab8403d59;nw=1;domain=.exhentai.org;");
-    	// urlc.setRequestProperty("Cookie","__utma=185428086.860750601.1395546199.1395546199.1395591056.2");
+    	
+    	 //urlc.setRequestProperty("Cookie","ipb_member_id=1400179;ipb_pass_hash=a3e01018c9b282d29864852ab8403d59;nw=1;domain=.exhentai.org;");
+    	 urlc.setRequestProperty("Cookie","ipb_member_id="+id+";ipb_pass_hash="+ps+";nw=1;domain=.exhentai.org;");
+    	 
+    	 // urlc.setRequestProperty("Cookie","__utma=185428086.860750601.1395546199.1395546199.1395591056.2");
     	 urlc.connect();
     	 
 

@@ -11,6 +11,7 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,6 +35,11 @@ public class FetchMangaIndex {
 	// ArrayList<ChapterItem> indexarr=new ArrayList<ChapterItem>();
 	 String conencode;
 	 String regxstr;
+	 int returncode=0;
+public int getReturncode() {
+		return returncode;
+	}
+
 public FetchMangaIndex(String urlstr,String regxstr) throws IOException{
 	 this.urlstr=urlstr;
 	 this.regxstr=regxstr;
@@ -59,18 +65,26 @@ public String initreq() throws IOException{
 		log.info("FetchMangaIndex error due to "+urlstr+"  error:"+e.toString());
 		return "11004####error URL!";
 	}
+	
+	//cookielist.size()*
+	int usecookie=(int) (Math.random()*cookielist.size());
+	
 	 urlc = (HttpURLConnection) url.openConnection();
 	 urlc.setInstanceFollowRedirects(false);
 	 urlc.setConnectTimeout(30000);
 	 urlc.setRequestProperty("Cache-Control", "no-cache");
 	 urlc.setRequestProperty("Pragma", "no-cache");
 	 urlc.setRequestProperty("Accept-Charset", "UTF-8");
-	 urlc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.14) Gecko/20110218 Firefox/3.6.14");
-	 urlc.setRequestProperty("Cookie","ipb_member_id="+cookielist.get(0).getHashid()+";ipb_pass_hash="+cookielist.get(0).getHashps()+";nw=1;"
+//	 urlc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; zh-CN; rv:1.9.2.14) Gecko/20110218 Firefox/3.6.14");
+	 urlc.setRequestProperty("Cookie","ipb_member_id="+cookielist.get(usecookie).getHashid()+";ipb_pass_hash="+
+			 											cookielist.get(usecookie).getHashps()+
+			 											";nw=1;domain=.exhentai.org;"
 	 	//	+ "uconfig=tl_m-uh_y-rc_0-cats_0-xns_0-ts_m-tr_1-prn_y-dm_l-rx_0-ry_0-sa_y-oi_n-qb_n-tf_n-hp_-hk_-xl_;"
 	 	//	+ "yay=louder;"
 	 	//	+ "lv=1387043522-1387048141"
 	 		);
+	 
+	 log.info("Testing debug for usecookie: "+cookielist.get(usecookie).getHashid()+" / "+cookielist.get(usecookie).getHashps());
 
 	 
 	 urlc.connect();
@@ -101,6 +115,8 @@ public String initreq() throws IOException{
 	*/ 
 	 Object o=null;
 	 try{
+		 
+		 returncode=urlc.getResponseCode(); 
 	 o=urlc.getContent();
 	 }catch(java.io.IOException ioex)
 	 {

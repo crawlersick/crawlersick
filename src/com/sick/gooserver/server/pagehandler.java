@@ -135,23 +135,32 @@ public class pagehandler extends HttpServlet {
 			//log.info("the requrstr is "+requrlwithpara);
 						
 			int cntlv1=0;
-		//	while(res1==null||res1.size()==0)
-		//	{
-		//	cntlv1++;
+			while(res1==null||res1.size()==0)
+			{
+			cntlv1++;
 			fmi=new FetchMangaIndex(requrlwithpara,regxstrhentai);
 			res1=this.dokkkdmextra(res, fmi,true);
+			//log.info("debug for return code************ "+fmi.getReturncode());
+			//log.info("debug for return content************ "+fmi.GetContent());
+			//"No hits found" will be in content if no result.
+			if (fmi.GetContent().indexOf("No hits found")!=-1)
+				break;
+			
 		//	if(cntlv1==5)
 		//		break;
 		//	if(cntlv1>1)
+			
 			if(res1==null||res1.size()==0)
 				try {
+					
+			
 					log.info("lv1 re-try "+cntlv1+fmi.GetContent());
-					Thread.sleep(300);
+					Thread.sleep(2200);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		//	}
+			}
 			
 			if (qvalue.indexOf("search=")!=-1&&res1!=null && res1.size()!=0)
 			{
@@ -282,7 +291,9 @@ public class pagehandler extends HttpServlet {
 					
 			//fmi=new FetchMangaIndex(qvalue+"?p="+pageindex,"no-repeat\"><a href=\"([^\"]+)\"><img alt=\"[^\"]+\" title=\"([^\"]+)\"");
 			fmi=new FetchMangaIndex(qvalue+"?p="+pagenn,"<a href=\"([^\"]+)\"><img alt=\"[^\"]+\" title=\"([^\"]+)\"");
-			temppage=this.dokkkdmextra(res, fmi);	
+			temppage=this.dokkkdmextra(res, fmi);
+			
+			
 			if(temppage==null||temppage.size()==0)
 			{temppage=null;}
 

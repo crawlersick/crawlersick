@@ -6,6 +6,12 @@ window.onbeforeunload = function() {
 <script type='text/javascript' src='http://jquery-loadmask.googlecode.com/svn/trunk/src/jquery.loadmask.js'>
 */
 
+var jumppicflag=false;
+function setjumppicflagtrue()
+{
+	jumppicflag=true;
+}
+
 var serverurl="";
 var serverurlT="NULL";
 var targetanaurl="NULL";
@@ -34,7 +40,14 @@ var arr=[
 'lv3requestserv7',
 'lv3requestserv8',
 'lv3requestserv9',
-'lv3requestserv10'
+'lv3requestserv10',
+'lv3requestserv11',
+'lv3requestserv12',
+'lv3requestserv13',
+'lv3requestserv14',
+'lv3requestserv15',
+'lv3requestserv16',
+'lv3requestserv17'
          ];
 
 function shuffle(array)
@@ -99,7 +112,7 @@ $(document).ready(function(){
 	
 	$("#urlpicker").keypress(function(e) {
 	    if(e.which == 13) {
-	    	$("button").click();
+	    	$("#sbutton").click();
 	    }
 	});
 	
@@ -110,7 +123,10 @@ $(document).ready(function(){
 		        $("#urlpicker").select();
 		    });
 	
-  $("button").click(function(){lv1pageget(0)});
+  $("#sbutton").click(function(){lv1pageget(0)});
+  
+  $("#jumpbb").click(function(){setjumppicflagtrue();});
+  
 
 	var keys=(new RegExp('[?|&]' + 'k' + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20');
 	if(keys)
@@ -118,14 +134,14 @@ $(document).ready(function(){
 		if(keys.match("http://[^/]+/g/[0-9]+/[0-9a-z]+"))
 		{
 			$("#urlpicker").val(keys);
-			$("#button").click();
+			$("#sbutton").click();
 		}
 		else
 		{
 			if(keys.match("[^/]+/g/[0-9]+/[0-9a-z]+"))
 			{
 				$("#urlpicker").val("http://"+keys);
-				$("#button").click();
+				$("#sbutton").click();
 			}
 			
 		}
@@ -245,7 +261,7 @@ function lv1pageget(lv1pagenum){
 function lv2hentaipageget(thisdivid,allqtype,xxx,serverurl,currenpagenum)
 {
 	$("#LoadingImage").show();
-	$("#button").prop("disabled", true);
+	$("#sbutton").prop("disabled", true);
 	vvflag=true;
 	//shuffle(arr);
 	//"http://"+arr[0]+".appspot.com/"+
@@ -317,7 +333,7 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 	if(loopii>=maxlength) 
 		{
 		$("#LoadingImage").hide();
-		$("#button").prop("disabled", false);
+		$("#sbutton").prop("disabled", false);
 		vvflag=false;
 		
 		if(allqtype=="ehentai"&&!vvflag&&picloadingflag)
@@ -331,6 +347,13 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		   }
 		
 		return;}
+	
+	if(jumppicflag)
+	{
+	loopii++;
+	jumppicflag=false;
+	}
+	
 	//shuffle(arr);
 	//"http://"+arr[0]+".appspot.com/"+
 	$.ajax({
@@ -378,8 +401,12 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 				$("#"+thiselem).append("<div>"+"Server too busy 2. re-loading  -  :"+ urlitem[loopii]["url"] +" with "+arr[currentlv3server]+"</div> ");
 				analystserver="http://"+arr[currentlv3server]+".appspot.com/";
 	
+
+				
 					setTimeout(
-							function(){loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);}
+							function(){
+								loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii);
+							}
 							,settimevvv);
 					
 		
