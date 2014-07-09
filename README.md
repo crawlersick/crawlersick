@@ -1,6 +1,6 @@
 sickcrawler
 ===========
 
-Project sickcrawler: Yes! H-ERO!
+Project sickcrawler: 
 Here is a project for a online crawler for online doujin books.
-Deployed in http://sickcrawler.appspot.com/
+
