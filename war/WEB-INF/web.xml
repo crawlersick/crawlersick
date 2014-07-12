@@ -16,6 +16,11 @@
     <servlet-name>urlf</servlet-name>
     <servlet-class>com.sick.gooserver.server.URLf</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>urlfopenvpn</servlet-name>
+    <servlet-class>com.sick.gooserver.server.urlfopenvpn</servlet-class>
+  </servlet>
+  
      <servlet>
     <servlet-name>urlf2</servlet-name>
     <servlet-class>com.sick.gooserver.server.URLf2</servlet-class>
@@ -60,7 +65,11 @@
     <servlet-name>urlf2</servlet-name>
     <url-pattern>/urlf2</url-pattern>
  </servlet-mapping>
-  
+
+ <servlet-mapping>
+    <servlet-name>urlfopenvpn</servlet-name>
+    <url-pattern>/urlfopenvpn</url-pattern>
+ </servlet-mapping>  
   
   <servlet-mapping>
     <servlet-name>kukuana</servlet-name>

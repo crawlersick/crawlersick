@@ -16,6 +16,9 @@ import java.util.Set;
 */
 import javax.servlet.http.*;
 
+import netfetch.ChapterItem;
+import netfetch.FetchAnyWeb;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,17 +28,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
-public class URLf extends HttpServlet {
+public class urlfopenvpn extends HttpServlet {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Logger log = Logger.getLogger(kukuana.class.getName());
+	private static final Logger log = Logger.getLogger(urlfopenvpn.class.getName());
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 	// res.setHeader("Content-Type", "text/plain");
@@ -66,12 +70,10 @@ public class URLf extends HttpServlet {
 			return;
 		}
 
-	 //res.getWriter().append("begin123:");
+
 	  try {
 		  StringBuilder s=new StringBuilder();
           URL url = new URL(q);
-        // URL url = new URL("http://g.e-hentai.org?key=aaaaa");
-		  //URL url = new URL("http://exhentai.org/");
      	 urlc = (HttpURLConnection)url.openConnection();
      	 
      	urlc.setUseCaches(false);
@@ -89,7 +91,7 @@ public class URLf extends HttpServlet {
     	// urlc.setRequestProperty("Cookie","");
     	
     	 //urlc.setRequestProperty("Cookie","ipb_member_id=1400179;ipb_pass_hash=a3e01018c9b282d29864852ab8403d59;nw=1;domain=.exhentai.org;");
-    	 urlc.setRequestProperty("Cookie","ipb_member_id="+id+";ipb_pass_hash="+ps+";nw=1;domain=.exhentai.org;");
+    	// urlc.setRequestProperty("Cookie","ipb_member_id="+id+";ipb_pass_hash="+ps+";nw=1;domain=.exhentai.org;");
     	 
     	 // urlc.setRequestProperty("Cookie","__utma=185428086.860750601.1395546199.1395546199.1395591056.2");
     	 urlc.connect();
@@ -127,13 +129,21 @@ public class URLf extends HttpServlet {
           }
           
           reader.close();
-     	 res.getWriter().append("--------"+urlc.getResponseCode());
-     	 res.getWriter().append(" +++++++++++"+urlc.getResponseMessage());
-     	 for(Iterator i = headers.iterator(); i.hasNext();){ 
-       	  Map.Entry map = (Map.Entry)i.next();
-       	  res.getWriter().append(map.getKey() + " : " + map.getValue()); 
-       	  }
+
           res.getWriter().append(s.toString());
+          res.getWriter().append("sickjohnsisick1122356l112355iaaaoss");
+  		String reg="<td class='vg_table_row_[0-9]+'.+?([0-9a-zA-Z]+).opengw.net.+?UDP: ([0-9]+).+?</span></b></td></tr>";
+  		FetchAnyWeb faw=new FetchAnyWeb("http://www.vpngate.net/en/",reg);
+  		faw.initreq();
+  		ArrayList<ChapterItem> mappingforudp=faw.getIndex();
+  		for(int i=0;i<mappingforudp.size();i++)
+		{
+  		res.getWriter().append(mappingforudp.get(i).geturl());
+  		res.getWriter().append(",");
+		res.getWriter().append(mappingforudp.get(i).getdesc());
+		res.getWriter().append(",");
+		}
+          
 
       } catch (MalformedURLException e) {
     	  log.info("FetchMangaIndex error due to  error1:"+e.toString());

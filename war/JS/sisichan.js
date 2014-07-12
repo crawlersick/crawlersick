@@ -12,6 +12,7 @@ function setjumppicflagtrue()
 	jumppicflag=true;
 }
 
+var imgfailtimes=0;
 var serverurl="";
 var serverurlT="NULL";
 var targetanaurl="NULL";
@@ -444,6 +445,7 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 			tmpimg.first().load(
 			function(){
 				console.log($("#"+thiselem).children().last().html() + "finished!");
+				imgfailtimes=0;
 				setTimeout(
 						function(){
 							loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii+1);
@@ -454,7 +456,11 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 			);
 			tmpimg.first().error(
 					function(){
-						console.log($("#"+thiselem).children().last().html() + "failed, re-try!");
+						console.log($("#"+thiselem).children().last().html() + "failed, re-try!"+imgfailtimes);
+						imgfailtimes++;
+						if(imgfailtimes>3)
+							{loopii++;imgfailtimes=0;}
+						
 						$("#"+thiselem).children().last().remove();
 						setTimeout(
 								function(){
