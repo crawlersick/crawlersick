@@ -20,6 +20,7 @@ import netfetch.ChapterItem;
 import netfetch.FetchAnyWeb;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,6 +34,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.zip.GZIPOutputStream;
 public class urlfopenvpn extends HttpServlet {
 	
 	/**
@@ -130,21 +132,38 @@ public class urlfopenvpn extends HttpServlet {
           
           reader.close();
 
-          res.getWriter().append(s.toString());
-          res.getWriter().append("sickjohnsisick1122356l112355iaaaoss");
+          //res.getWriter().append(s.toString());
+          //res.getWriter().append("sickjohnsisick1122356l112355iaaaoss");
+          s.append("sickjohnsisick1122356l112355iaaaoss");
+          
   		String reg="<td class='vg_table_row_[0-9]+'.+?([0-9a-zA-Z]+).opengw.net.+?UDP: ([0-9]+).+?</span></b></td></tr>";
   		FetchAnyWeb faw=new FetchAnyWeb("http://www.vpngate.net/en/",reg);
   		faw.initreq();
   		ArrayList<ChapterItem> mappingforudp=faw.getIndex();
   		for(int i=0;i<mappingforudp.size();i++)
 		{
-  		res.getWriter().append(mappingforudp.get(i).geturl());
-  		res.getWriter().append(",");
-		res.getWriter().append(mappingforudp.get(i).getdesc());
-		res.getWriter().append(",");
+  		//res.getWriter().append(mappingforudp.get(i).geturl());
+  		//res.getWriter().append(",");
+		//res.getWriter().append(mappingforudp.get(i).getdesc());
+		//res.getWriter().append(",");
+		
+  		s.append(mappingforudp.get(i).geturl());
+  		s.append(",");
+		s.append(mappingforudp.get(i).getdesc());
+		s.append(",");
+		
 		}
-          
-
+ 
+ 		//res.setContentType("text/plain; charset=utf-8");
+ 		
+ 		
+ 		res.getOutputStream().write(compress(s.toString()));
+ 		//res.flushBuffer();
+ 		
+  		//res.getWriter().append(s.toString());
+  		
+  		
+  			
       } catch (MalformedURLException e) {
     	  log.info("FetchMangaIndex error due to  error1:"+e.toString());
           // ...
@@ -152,9 +171,19 @@ public class urlfopenvpn extends HttpServlet {
           // ...
     	  log.info("FetchMangaIndex error due to  error2:"+e.toString());
       }
-
+	  
 
 
 	}
+	
+    public static byte[] compress(String string) throws IOException {
+        ByteArrayOutputStream os = new ByteArrayOutputStream(string.length());
+        GZIPOutputStream gos = new GZIPOutputStream(os);
+        gos.write(string.getBytes());
+        gos.close();
+        byte[] compressed = os.toByteArray();
+        os.close();
+        return compressed;
+    }
 
 }
