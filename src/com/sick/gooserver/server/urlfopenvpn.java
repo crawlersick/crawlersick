@@ -14,10 +14,16 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 */
+import javax.jdo.PersistenceManager;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
 import netfetch.ChapterItem;
+import netfetch.Cookieinfo;
 import netfetch.FetchAnyWeb;
+import netfetch.Mywords;
+import netfetch.PMF;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +37,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -42,6 +49,32 @@ public class urlfopenvpn extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger log = Logger.getLogger(urlfopenvpn.class.getName());
+	
+	private static  List<Mywords> MywordsList;
+	
+	  public void init(ServletConfig config) throws ServletException {
+		    super.init(config);
+		    
+		    PersistenceManager pm = PMF.get().getPersistenceManager();
+		    javax.jdo.Query q=pm.newQuery(Cookieinfo.class);		    
+		    q=pm.newQuery(Mywords.class);
+		    MywordsList=(List<Mywords>) q.execute();
+		    if(MywordsList.isEmpty())
+		    {
+		    	
+		    	Mywords mwd =new Mywords("hi~you ok?","","",0);
+		    	MywordsList.add(mwd);
+		    	pm.makePersistent(mwd);
+		    }    
+		    pm.close();
+		  }
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 	// res.setHeader("Content-Type", "text/plain");

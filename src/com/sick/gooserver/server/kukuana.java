@@ -55,15 +55,15 @@ public class kukuana extends HttpServlet {
 		String qtype =req.getParameter("qtype");
 		String qvalue =req.getParameter("qvalue");
 		
-		String originheader=req.getHeader("Origin");
-		if(originheader != null)
-		{
+		//String originheader=req.getHeader("Origin");
+		//if(originheader != null)
+		//{
 		//log.info("Origin ----got!!!! "+originheader);
 			res.addHeader("Access-Control-Allow-Origin", "*");
 			res.addHeader("Access-Control-Allow-Credentials", "true");
 			res.addHeader("Access-Control-Expose-Headers", "lalala");
 		//	req.setAttribute("Content-Type", "text/html; charset=utf-8");
-		}
+		//}
 
 			
 		res.setHeader("Content-Type", "text/plain; charset=utf-8");
@@ -283,12 +283,12 @@ public class kukuana extends HttpServlet {
 				 res1=new ArrayList<ChapterItem>();
 				 res1.add(errorci);
 				 
-				 
+			/*	  comment this part! i do not know what i am thinking when program this part . fuck!
 				 URL tempurl=new URL(qvalue);
 				 log.warning("try to get host !!!"+tempurl.getHost());
 				 fmi=new FetchMangaIndex(tempurl.getHost(),"<img id=\"img\" src=\"([^\"]+)\" (style)=");					
 					this.dokkkdmextra(res, fmi);	
-				 
+				*/ 
 			 }
 			 /*
 			 else
