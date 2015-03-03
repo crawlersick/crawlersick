@@ -195,7 +195,12 @@ function lv1pageget(lv1pagenum){
 
 		targetanaurl=targetanaurl.replace(new RegExp('\\s+', 'g'), "%2B");
 		//targetanaurl=targetanaurl.replace(" ","%2B");
-		targetanaurl="http://exhentai.org/?f_search="+targetanaurl;
+		
+		
+		//targetanaurl="http://exhentai.org/?f_search="+targetanaurl;
+		//just emergency fix
+		targetanaurl="http://g.e-hentai.org/?f_search="+targetanaurl;
+		
 		allqtype="ehentai";
 		mainhost="";
 		serverurl="";
@@ -379,7 +384,7 @@ function loopitemfun(thiselem,urlitem,allqtype,maxlength,loopii)
 		},
 		success: function(data){
 			
-			if (data[0]["url"]=="/404.png")
+			if (data[0]["url"]=="/404.png"||data[0]["url"]=="http://ehgt.org/g/509.gif")
 				{
 				/*
 				$("#"+thiselem).append("<div>"+"Server to busy 2. re-loading  -  :"+ urlitem[loopii]["url"] +"</div> ");

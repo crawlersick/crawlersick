@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <script src="http://code.jquery.com/jquery-2.0.1.min.js"></script>
 <script src="../JS/jquery.cookie.js"></script>
-<script src="http://www.jacklmoore.com/js/jquery.autosize.js"></script>
+<script src="../JS/autosize.js"></script>
 
 </head>
 
@@ -12,7 +12,7 @@
 
 <body>
 <h2>やらないか?</h2>
-<p>吾的人生一片无悔!</p>
+<p>seems problem...!</p>
 <div id="LoadingImage" style="display: none">
 Connecting to Server...<img src="/loading.gif" /> 
 </div>
@@ -105,7 +105,8 @@ var writemsgtodiv=function(msgtext)
 	$("div#mesg2").append("<div><textarea disabled id=text"+textcnt+" class='animated' style='width: 95%;'>"+msgtext+"</textarea></div>");
   //  $('text'+textcnt).height( 0 );
   //  $('text'+textcnt).height( $('text'+textcnt).scrollHeight );
- $('#text'+textcnt).autosize().show().trigger('autosize.resize');
+ //$('#text'+textcnt).autosize().show().trigger('autosize.resize');
+ autosize($('#text'+textcnt));
     textcnt++;
 	$('div#mesg2').scrollTop($('div#mesg2').prop("scrollHeight")); //.animate({scrollTop: $('div#mesg2').prop('scrollHeight')},'fast');
 }
